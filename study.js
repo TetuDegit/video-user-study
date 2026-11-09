@@ -381,7 +381,7 @@ byId('download').addEventListener('click', () => {
 });
 
 try {
-  const response = await fetch('./study-7s.json');
+  const response = await fetch('./study-7s.json', { cache: 'no-store' });
   if (!response.ok) throw new Error('无法读取评测配置。');
   config = await response.json();
   trials = getTrials(config);
