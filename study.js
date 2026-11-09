@@ -2,7 +2,10 @@ const letters = ['A', 'B', 'C'];
 const backboneIds = ['Krea_14B', 'LongLive_5B'];
 const sampleCount = 10;
 const clipName = /^clip-[a-f0-9]{24}\.mp4$/;
-const storageKey = 'video-user-study.session';
+const storagePrefix = 'video-user-study.session.';
+const localMediaBase = location.hostname === '127.0.0.1'
+  ? new URL('./video/', location.href)
+  : null;
 
 const byId = (id) => document.getElementById(id);
 const play = byId('play');
@@ -18,7 +21,6 @@ const pad = (number) => String(number).padStart(2, '0');
 let config;
 let trials;
 let session;
-let mediaBase;
 let disposeQuestion = () => {};
 
 function setView(view) {
@@ -80,11 +82,11 @@ function getTrials(settings) {
   }
 
   const clipNames = new Set();
-  return settings.backbones.flatMap(({ id, duration, samples }, group) => {
+  return settings.backbones.flatMap(({ id, duration, samples, releaseBase = settings.releaseBase }, group) => {
     if (id !== backboneIds[group] || !Array.isArray(samples) || samples.length !== sampleCount) {
       throw new Error('两个模型各需要配置 10 个视频编号。');
     }
-    if (duration !== (group === 0 ? 3.5 : 7)) throw new Error('视频时长配置不正确。');
+    if (duration !== 7) throw new Error('视频时长配置不正确。');
     const ids = samples.map((sample) => sample.id);
     if (new Set(ids).size !== ids.length
         || ids.some((sample) => !Number.isInteger(sample) || sample < 1 || sample > 24)) {
@@ -97,7 +99,7 @@ function getTrials(settings) {
         throw new Error('每题必须包含三段不同的视频。');
       }
       for (const name of clips) clipNames.add(name);
-      return { backbone: id, sample, duration, clips };
+      return { backbone: id, sample, duration, clips, releaseBase };
     });
   });
 }
@@ -114,7 +116,7 @@ function shufflePositions() {
 function getSession() {
   const study = JSON.stringify({ version: config.version, trials });
   try {
-    const saved = JSON.parse(localStorage.getItem(storageKey));
+    const saved = JSON.parse(localStorage.getItem(storagePrefix + config.version));
     if (saved?.study === study
         && saved.orders.length === trials.length
         && saved.orders.every((order) => [...order].sort().join(',') === '0,1,2')
@@ -139,7 +141,7 @@ function getSession() {
 
 function saveSession() {
   try {
-    localStorage.setItem(storageKey, JSON.stringify(session));
+    localStorage.setItem(storagePrefix + config.version, JSON.stringify(session));
   } catch {
     byId('storage-status').textContent = '浏览器无法保存进度，请保持本页打开，并在答完后下载记录。';
   }
@@ -164,7 +166,7 @@ function makeCards(order, trial) {
     radio.value = String(position);
     radio.setAttribute('aria-label', '选择视频 ' + letter);
     video.setAttribute('aria-label', '视频 ' + letter);
-    if (trial) video.src = new URL(trial.clips[order[position]], mediaBase).href;
+    if (trial) video.src = new URL(trial.clips[order[position]], localMediaBase ?? trial.releaseBase).href;
     fragment.append(clone);
     return { video, placeholder, radio, letter };
   });
@@ -379,13 +381,10 @@ byId('download').addEventListener('click', () => {
 });
 
 try {
-  const response = await fetch('./study.json');
+  const response = await fetch('./study-7s.json');
   if (!response.ok) throw new Error('无法读取评测配置。');
   config = await response.json();
   trials = getTrials(config);
-  mediaBase = location.hostname === '127.0.0.1'
-    ? new URL('./video/', location.href)
-    : new URL(config.releaseBase);
   byId('study-count').textContent = trials.length;
   byId('progress').max = trials.length;
   session = getSession();

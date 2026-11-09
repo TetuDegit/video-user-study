@@ -1,0 +1,179 @@
+{
+  "version": 3,
+  "releaseBase": "https://github.com/TetuDegit/video-user-study/releases/download/study-v1/",
+  "backbones": [
+    {
+      "id": "Krea_14B",
+      "duration": 7,
+      "samples": [
+        {
+          "id": 1,
+          "clips": [
+            "clip-39cfb618829e19793dc8136b.mp4",
+            "clip-768a0157fc73d44baa02d7a2.mp4",
+            "clip-cb0d7665786cdd6578c000a7.mp4"
+          ]
+        },
+        {
+          "id": 2,
+          "clips": [
+            "clip-c4ac006952a88722191bdbe1.mp4",
+            "clip-a283c965d6f730db09016b08.mp4",
+            "clip-cafd5244711ee18d512f3020.mp4"
+          ]
+        },
+        {
+          "id": 3,
+          "clips": [
+            "clip-98a014c1208b3b6fd593e7d0.mp4",
+            "clip-4924569bb61ee57c6b9c41ca.mp4",
+            "clip-b19cd4c26a682012dadafc85.mp4"
+          ]
+        },
+        {
+          "id": 4,
+          "clips": [
+            "clip-54e32918ffd6731199c9d9a8.mp4",
+            "clip-2568e9dcaf89f9f26af54a2c.mp4",
+            "clip-6261a8d9c91f5b4f1fbeb641.mp4"
+          ]
+        },
+        {
+          "id": 5,
+          "clips": [
+            "clip-04ede121f74ec8553fe32167.mp4",
+            "clip-4cb8ce4caebf0f7f16e20834.mp4",
+            "clip-7708bcea4067efdbce3f6406.mp4"
+          ]
+        },
+        {
+          "id": 6,
+          "clips": [
+            "clip-40539de21be9c4db2fe2592d.mp4",
+            "clip-3626fe964b6c79081be10603.mp4",
+            "clip-6c1509f0377ef491da69a285.mp4"
+          ]
+        },
+        {
+          "id": 7,
+          "clips": [
+            "clip-22f346ee55cc20f748696968.mp4",
+            "clip-f05f7c5317b7b0b805aae1d3.mp4",
+            "clip-903a19c548eeeb686d2dc8a4.mp4"
+          ]
+        },
+        {
+          "id": 8,
+          "clips": [
+            "clip-353223f368b2d10c96223b9d.mp4",
+            "clip-b604e3e569059fd02f65b984.mp4",
+            "clip-65b3f0fb8947ba5b3bd193d7.mp4"
+          ]
+        },
+        {
+          "id": 22,
+          "clips": [
+            "clip-c01eca2dee43875126096e00.mp4",
+            "clip-ab4db8d60bafefff39f12d2c.mp4",
+            "clip-6cdad3183e76d573a2c0cdf4.mp4"
+          ]
+        },
+        {
+          "id": 23,
+          "clips": [
+            "clip-975adbf85f369c45334b247b.mp4",
+            "clip-fe6802a6ec8be7274d15063d.mp4",
+            "clip-6b82411f05f2dd5bd058b24a.mp4"
+          ]
+        }
+      ],
+      "releaseBase": "https://github.com/TetuDegit/video-user-study/releases/download/study-v2/"
+    },
+    {
+      "id": "LongLive_5B",
+      "duration": 7,
+      "samples": [
+        {
+          "id": 8,
+          "clips": [
+            "clip-7b765e6e66422053fcc2a2d9.mp4",
+            "clip-e3e5c0f5f25e387b5eb2b2d1.mp4",
+            "clip-18c4ddba964da03b0a95d2a1.mp4"
+          ]
+        },
+        {
+          "id": 9,
+          "clips": [
+            "clip-1645616ec1b0e132e686f7f7.mp4",
+            "clip-28fdee66c7bc8f034a370eaf.mp4",
+            "clip-5af96364052088f245599897.mp4"
+          ]
+        },
+        {
+          "id": 11,
+          "clips": [
+            "clip-f4cd992e15aa0ff402ab650c.mp4",
+            "clip-b2e97dc0dbac34577c1be2ec.mp4",
+            "clip-34f2c0e550999175aabdf339.mp4"
+          ]
+        },
+        {
+          "id": 13,
+          "clips": [
+            "clip-bba662413b0b20d18037b420.mp4",
+            "clip-c7e39c803c66683b5922a8e6.mp4",
+            "clip-c1ed7d4fe15bbf9f4dc227f7.mp4"
+          ]
+        },
+        {
+          "id": 16,
+          "clips": [
+            "clip-80d301b5bef480c50182b4c3.mp4",
+            "clip-112a2bf88de60ef1ae0e4af9.mp4",
+            "clip-139f23f75c6b1d102ece4720.mp4"
+          ]
+        },
+        {
+          "id": 18,
+          "clips": [
+            "clip-26baf3c5c3badf226762e2d4.mp4",
+            "clip-42fa43948ba58edea831b0ea.mp4",
+            "clip-0955ae95ab3532cb497086db.mp4"
+          ]
+        },
+        {
+          "id": 19,
+          "clips": [
+            "clip-4b1227e4b9d26adb91d9b3f2.mp4",
+            "clip-47b2a479c3fc751df27439d5.mp4",
+            "clip-906afeb8ff3f9b3fc26c151c.mp4"
+          ]
+        },
+        {
+          "id": 20,
+          "clips": [
+            "clip-7a1b90c6f1cb6861ddea6bdd.mp4",
+            "clip-233f252ffbf638c94f62869c.mp4",
+            "clip-e46bad5761b057ede004ee18.mp4"
+          ]
+        },
+        {
+          "id": 21,
+          "clips": [
+            "clip-4c0890f3cced4bdaf1e920be.mp4",
+            "clip-fc4d4f6888be2ef204a5ce65.mp4",
+            "clip-fbcab77a41276358203190d9.mp4"
+          ]
+        },
+        {
+          "id": 24,
+          "clips": [
+            "clip-d7e24783844c8ed5ec2f976d.mp4",
+            "clip-4af89cbc4575db950780906a.mp4",
+            "clip-b4b8ccf837191bae32fc2b3f.mp4"
+          ]
+        }
+      ]
+    }
+  ]
+}
