@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="三段视频同步播放的视觉质量盲测问卷">
-  <title>视频视觉质量评测</title>
-  <link rel="stylesheet" href="./styles.css">
-  <script type="module" src="./study.js"></script>
+  <meta name="description" content="关注画面细节的三段视频同步盲测问卷">
+  <title>视频画面细节评测</title>
+  <link rel="stylesheet" href="./styles.css?v=wide-view">
+  <script type="module" src="./study.js?v=wide-view"></script>
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>视频视觉质量评测</span>
+        <span>视频画面细节评测</span>
       </div>
       <span class="study-tag">匿名盲测 <span aria-hidden="true">/</span> <b id="study-count">20</b> 题</span>
     </div>
@@ -29,8 +29,8 @@
           </div>
           <progress id="progress" max="20" value="0" aria-label="答题进度"></progress>
         </div>
-        <h1 id="question" tabindex="-1">哪一段视频的整体视觉质量最好？</h1>
-        <p class="subtitle">同步观看同一场景的 A、B、C 三段视频，选出你认为整体视觉质量最好的一段。每题三段时长相同，可以重播。</p>
+        <h1 id="question" tabindex="-1">留意画面细节，哪段视频的画质最好？</h1>
+        <p class="subtitle">同步观看三段视频，留意纹理、边缘和小物体在运动中的表现。用「放大」查看单片，可随时切回并排。</p>
       </div>
 
       <div class="comparison">
@@ -44,8 +44,21 @@
               <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6"/></svg>
               从头重播
             </button>
+            <button type="button" class="button secondary" id="expand" aria-pressed="false">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4H4v5m11-5h5v5m-5 11h5v-5M9 20H4v-5"/></svg>
+              <span id="expand-label">全屏对比</span>
+            </button>
           </div>
-          <span id="time" class="time" aria-label="播放时间">0.0 / 3.5 秒</span>
+          <div class="view-controls">
+            <div class="view-picker" id="view-picker" role="group" aria-label="画面大小">
+              <button type="button" data-view="all" aria-pressed="true">并排</button>
+              <span aria-hidden="true">放大</span>
+              <button type="button" data-view="A" aria-label="放大 A" aria-pressed="false">A</button>
+              <button type="button" data-view="B" aria-label="放大 B" aria-pressed="false">B</button>
+              <button type="button" data-view="C" aria-label="放大 C" aria-pressed="false">C</button>
+            </div>
+            <span id="time" class="time" aria-label="播放时间">0.0 / 3.5 秒</span>
+          </div>
         </div>
 
         <fieldset class="options" aria-describedby="media-status">

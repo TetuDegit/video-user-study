@@ -9,6 +9,10 @@ const play = byId('play');
 const replay = byId('replay');
 const next = byId('next');
 const cards = byId('cards');
+const survey = byId('survey');
+const expand = byId('expand');
+const viewPicker = byId('view-picker');
+const viewButtons = [...viewPicker.querySelectorAll('button')];
 const pad = (number) => String(number).padStart(2, '0');
 
 let config;
@@ -16,6 +20,58 @@ let trials;
 let session;
 let mediaBase;
 let disposeQuestion = () => {};
+
+function setView(view) {
+  if (view === 'all') delete cards.dataset.view;
+  else cards.dataset.view = view;
+  for (const button of viewButtons) {
+    button.setAttribute('aria-pressed', String(button.dataset.view === view));
+  }
+  for (const video of cards.querySelectorAll('video')) {
+    video.toggleAttribute('inert', view !== 'all' && video.closest('.card').dataset.letter !== view);
+  }
+}
+
+function isExpanded() {
+  return document.fullscreenElement === survey || survey.classList.contains('viewport-expanded');
+}
+
+function updateExpand() {
+  const expanded = isExpanded();
+  expand.setAttribute('aria-pressed', String(expanded));
+  byId('expand-label').textContent = expanded ? '退出全屏' : '全屏对比';
+}
+
+async function exitExpanded() {
+  if (document.fullscreenElement === survey) await document.exitFullscreen();
+  survey.classList.remove('viewport-expanded');
+  updateExpand();
+}
+
+expand.addEventListener('click', async () => {
+  if (isExpanded()) {
+    await exitExpanded();
+    return;
+  }
+  if (document.fullscreenEnabled) {
+    try {
+      await survey.requestFullscreen();
+      return;
+    } catch {
+      // Embedded browsers can refuse fullscreen. Fill the available viewport.
+    }
+  }
+  survey.classList.add('viewport-expanded');
+  updateExpand();
+});
+document.addEventListener('fullscreenchange', updateExpand);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && survey.classList.contains('viewport-expanded')) exitExpanded();
+});
+viewPicker.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-view]');
+  if (button) setView(button.dataset.view);
+});
 
 function getTrials(settings) {
   if (!Number.isSafeInteger(settings.version) || settings.version < 1
@@ -102,6 +158,7 @@ function makeCards(order, trial) {
     const video = clone.querySelector('video');
     const placeholder = clone.querySelector('.placeholder');
     const radio = clone.querySelector('input');
+    clone.querySelector('.card').dataset.letter = letter;
     clone.querySelector('.letter').textContent = letter;
     clone.querySelector('.choice-caption').textContent = '选择 ' + letter;
     radio.value = String(position);
@@ -119,7 +176,8 @@ function renderQuestion() {
   disposeQuestion();
   const index = session.answers.length;
   if (index === trials.length) {
-    byId('survey').hidden = true;
+    if (isExpanded()) exitExpanded();
+    survey.hidden = true;
     byId('complete-count').textContent = trials.length + ' / ' + trials.length;
     byId('complete').hidden = false;
     byId('complete-title').focus();
@@ -135,6 +193,8 @@ function renderQuestion() {
   const trial = trials[index];
   const { duration } = trial;
   const slots = makeCards(order, trial);
+  setView('all');
+  cards.style.removeProperty('--video-ratio');
   const videos = slots.map(({ video }) => video);
   const controller = new AbortController();
   const { signal } = controller;
@@ -240,6 +300,7 @@ function renderQuestion() {
       pausePlayback();
       return;
     }
+    cards.style.setProperty('--video-ratio', video.videoWidth / video.videoHeight);
     placeholder.hidden = true;
     video.hidden = false;
     updateControls();
@@ -278,6 +339,7 @@ function renderQuestion() {
     renderQuestion();
     if (session.answers.length < trials.length) {
       window.scrollTo(0, 0);
+      survey.scrollTop = 0;
       byId('question').focus({ preventScroll: true });
     }
   });
