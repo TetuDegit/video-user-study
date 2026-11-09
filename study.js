@@ -3,6 +3,7 @@ const backboneIds = ['Krea_14B', 'LongLive_5B'];
 const sampleCount = 10;
 const clipName = /^clip-[a-f0-9]{24}\.mp4$/;
 const storagePrefix = 'video-user-study.session.';
+const clearedBeforeVersion = 6;
 const localMediaBase = location.hostname === '127.0.0.1'
   ? new URL('./video/', location.href)
   : null;
@@ -137,6 +138,18 @@ function getSession() {
     orders: trials.map(shufflePositions),
     answers: [],
   };
+}
+
+function clearOldSessions() {
+  if (config.version < clearedBeforeVersion) return;
+  try {
+    localStorage.removeItem('video-user-study.session');
+    for (let version = 1; version < clearedBeforeVersion; version++) {
+      localStorage.removeItem(storagePrefix + version);
+    }
+  } catch {
+    // Storage may be unavailable in this browser.
+  }
 }
 
 function saveSession() {
@@ -387,6 +400,7 @@ try {
   trials = getTrials(config);
   byId('study-count').textContent = trials.length;
   byId('progress').max = trials.length;
+  clearOldSessions();
   session = getSession();
   saveSession();
   renderQuestion();
