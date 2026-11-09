@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="三段视频同步播放的视觉质量盲测问卷">
+  <title>视频视觉质量评测</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./study.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>视频视觉质量评测</span>
+      </div>
+      <span class="study-tag">匿名盲测 <span aria-hidden="true">/</span> <b id="study-count">20</b> 题</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="survey" aria-labelledby="question">
+      <div class="question-header">
+        <div class="progress-area">
+          <div class="progress-label">
+            <span id="question-number">第 01 / 20 题</span>
+            <span id="progress-label">已完成 0 题</span>
+          </div>
+          <progress id="progress" max="20" value="0" aria-label="答题进度"></progress>
+        </div>
+        <h1 id="question" tabindex="-1">哪一段视频的整体视觉质量最好？</h1>
+        <p class="subtitle">同步观看同一场景的 A、B、C 三段视频，选出你认为整体视觉质量最好的一段。每题三段时长相同，可以重播。</p>
+      </div>
+
+      <div class="comparison">
+        <div class="toolbar">
+          <div class="toolbar-controls">
+            <button type="button" class="button primary" id="play" disabled>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path id="play-icon" d="M8 5v14l11-7z" fill="currentColor"/></svg>
+              <span id="play-label">同步播放</span>
+            </button>
+            <button type="button" class="button secondary" id="replay" disabled>
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 4v6h6"/></svg>
+              从头重播
+            </button>
+          </div>
+          <span id="time" class="time" aria-label="播放时间">0.0 / 3.5 秒</span>
+        </div>
+
+        <fieldset class="options" aria-describedby="media-status">
+          <legend class="sr-only">选择一段视频</legend>
+          <div id="cards" class="cards"></div>
+        </fieldset>
+        <p id="media-status" class="media-status" role="status">正在读取评测配置…</p>
+      </div>
+
+      <div class="survey-footer">
+        <p id="footer-note">看完三段视频后，选择 A、B 或 C。</p>
+        <button type="button" id="next" class="button primary" disabled>
+          <span id="next-label">下一题</span>
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <section id="complete" class="complete" aria-labelledby="complete-title" hidden>
+      <span class="complete-mark" aria-hidden="true">✓</span>
+      <p class="complete-count" id="complete-count">20 / 20</p>
+      <h1 id="complete-title" tabindex="-1">评测已完成</h1>
+      <p>感谢参与。你可以下载本次评测的答题记录。</p>
+      <button type="button" class="button primary" id="download">下载答题记录</button>
+    </section>
+    <p id="storage-status" class="storage-status" role="status"></p>
+  </main>
+
+  <template id="card">
+    <div class="card">
+      <div class="viewport">
+        <video muted playsinline preload="auto" disablepictureinpicture disableremoteplayback hidden></video>
+        <span class="placeholder" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="2" y="5" width="28" height="22" rx="4"/><path d="m13 11 8 5-8 5z"/></svg>
+        </span>
+      </div>
+      <label class="choice">
+        <span class="choice-name"><span class="letter"></span><span class="choice-caption"></span></span>
+        <input type="radio" name="selection" disabled>
+      </label>
+    </div>
+  </template>
+</body>
+</html>
